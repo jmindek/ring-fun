@@ -9,11 +9,6 @@
   (GET "/" []  {:status 200 :headers {"Content-Type" "text/html"} :body "<p>A response</p>"})
   (route/not-found "<h1>Page not found</h1>"))
 
-(defn handler [request]
-  ({:status 200
-   :headers {"Content-Type" "text/html"}
-   :body "<p>A response</p>"}))
-
 (defn wrap-spy [handler]
   (fn [request]
     (println "---------------")
@@ -25,10 +20,9 @@
       (println "---------------")
       response)))
 
-;; (defn app [request]
-;;   (handler request))
+
 (def app
-  (-> (handler/site compojure-app)  ;; #' treats handler as the variable ring-fun/handler
+  (-> (handler/site compojure-app)
     (ring.middleware.stacktrace/wrap-stacktrace)
     (wrap-spy)))
 
