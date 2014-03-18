@@ -6,7 +6,7 @@
             [compojure.handler :as handler]))
 
 (defroutes compojure-app
-  (GET "/" []  {:status 200 :headers {"Content-Type" "text/html"} :body "<p>A response</p>"})
+  (GET "/" []  {:status 200 :headers {"Content-Type" "text/html"} :body "<p>A GET request response</p>"})
   (route/not-found "<h1>Page not found</h1>"))
 
 (defn wrap-spy [handler]
@@ -22,7 +22,7 @@
 
 
 (def app
-  (-> (handler/site compojure-app)
+  (-> #'compojure-app
     (ring.middleware.stacktrace/wrap-stacktrace)
     (wrap-spy)))
 
